@@ -4,7 +4,7 @@ import { Op } from 'sequelize';
 
 // Create email transporter
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
     secure: false,
@@ -37,13 +37,10 @@ const sendOverdueEmail = async (invoice) => {
           <div style="background-color: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #dc3545;">
             <h3 style="margin-top: 0; color: #333;">Invoice Details</h3>
             <p><strong>Invoice Number:</strong> ${invoice.invoiceNumber}</p>
-            <p><strong>Amount:</strong> $${parseFloat(invoice.amount).toFixed(2)}</p>
             <p><strong>Due Date:</strong> ${new Date(invoice.dueDate).toLocaleDateString()}</p>
             <p><strong>Days Overdue:</strong> ${daysPastDue} days</p>
-            ${invoice.description ? `<p><strong>Description:</strong> ${invoice.description}</p>` : ''}
-          </div>
           
-          <p>Please arrange payment as soon as possible to avoid any late fees or service interruptions.</p>
+          <p>Please arrange payment as soon as possible .</p>
           
           <p>If you have already made this payment, please disregard this notice. If you have any questions or concerns, please contact us immediately.</p>
           
@@ -74,7 +71,6 @@ export const sendOverdueReminders = async () => {
       where: {
         dueDate: { [Op.lt]: new Date() },
         paymentStatus: 'Unpaid',
-        isActive: true
       }
     });
 

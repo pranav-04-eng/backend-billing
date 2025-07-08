@@ -20,6 +20,7 @@ router.post(
     body('invoiceDate').optional().isISO8601(),
     body('dueDate').isISO8601().withMessage('Valid due date is required'),
     body('paymentStatus').optional().isIn(['Paid', 'Unpaid']),
+    body('invoiceAmount').isDecimal().withMessage('Valid invoice amount is required')
   ],
   async (req, res) => {
     try {
@@ -34,7 +35,8 @@ router.post(
         customerEmail,
         invoiceDate,
         dueDate,
-        paymentStatus = 'Unpaid'
+        paymentStatus = 'Unpaid',
+        invoiceAmount
       } = req.body;
 
       const invoiceData = {
@@ -43,6 +45,7 @@ router.post(
         invoiceDate: invoiceDate || new Date(),
         dueDate,
         paymentStatus,
+        invoiceAmount,
       };
 
       if (req.file) {
@@ -74,6 +77,7 @@ router.put(
     body('invoiceDate').optional().isISO8601(),
     body('dueDate').optional().isISO8601(),
     body('paymentStatus').optional().isIn(['Paid', 'Unpaid']),
+    body('invoiceAmount').optional().isDecimal().withMessage('Invoice amount must be a number'),
   ],
   async (req, res) => {
     try {
