@@ -14,8 +14,9 @@ const PORT = process.env.PORT;
 
 // Middleware
 app.use(cors({
-  origin: '*',
+  origin: ['http://localhost:5173', 'https://frontend-billing.vercel.app/'], // allow both dev and production
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true, // allow cookies/auth headers
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
