@@ -43,6 +43,23 @@ const Invoice = sequelize.define('Invoice', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  pdfData: {
+    type: DataTypes.BLOB('long'), // Store PDF as binary data
+    allowNull: true,
+  },
+  pdfFileName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  pdfMimeType: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: 'application/pdf',
+  },
+  pdfSize: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
   invoiceAmount: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
