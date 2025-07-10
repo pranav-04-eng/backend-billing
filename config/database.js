@@ -51,7 +51,7 @@ export const connectDB = async () => {
 
     // Sync all models (create tables if not exist)
     const models = await import('../models/index.js');
-    await sequelize.sync(); // Use { force: true } if you want to drop and recreate tables
+    await sequelize.sync({ force: true }); // Use { force: true } if you want to drop and recreate tables
 
     console.log('✅ Database models synchronized');
 
